@@ -6,6 +6,7 @@ import {
   Voice,
   Formatter,
 } from "vexflow";
+import logo from "/logo.png"; // Import new Logo
 
 // Sound Effects
 const SOUND = {
@@ -14,29 +15,18 @@ const SOUND = {
   levelup: new Audio("https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"),
 };
 
-// Clef options
+// Supported Clefs
 const clefs = ["treble", "bass", "alto", "tenor"];
 
-// Clef-specific ranges (max 2 ledger lines above/below)
+// Limit notes to maximum 2 ledger lines above/below staff
 const clefRanges = {
-  treble: [
-    "b/3", "c/4", "d/4", "e/4", "f/4", "g/4", "a/4", "b/4",
-    "c/5", "d/5", "e/5", "f/5", "g/5", "a/5"
-  ],
-  bass: [
-    "c/2", "d/2", "e/2", "f/2", "g/2", "a/2", "b/2",
-    "c/3", "d/3", "e/3", "f/3", "g/3", "a/3", "b/3"
-  ],
-  alto: [
-    "e/3", "f/3", "g/3", "a/3", "b/3",
-    "c/4", "d/4", "e/4", "f/4", "g/4", "a/4", "b/4", "c/5"
-  ],
-  tenor: [
-    "d/3", "e/3", "f/3", "g/3", "a/3", "b/3",
-    "c/4", "d/4", "e/4", "f/4", "g/4", "a/4", "b/4"
-  ],
+  treble: ["b/3", "c/4", "d/4", "e/4", "f/4", "g/4", "a/4", "b/4", "c/5", "d/5", "e/5", "f/5", "g/5", "a/5"],
+  bass: ["c/2", "d/2", "e/2", "f/2", "g/2", "a/2", "b/2", "c/3", "d/3", "e/3", "f/3", "g/3", "a/3", "b/3"],
+  alto: ["e/3", "f/3", "g/3", "a/3", "b/3", "c/4", "d/4", "e/4", "f/4", "g/4", "a/4", "b/4", "c/5"],
+  tenor: ["d/3", "e/3", "f/3", "g/3", "a/3", "b/3", "c/4", "d/4", "e/4", "f/4", "g/4", "a/4", "b/4"],
 };
 
+// Generate a random note within the selected clef range
 function getRandomNote(clef) {
   const range = clefRanges[clef];
   const note = range[Math.floor(Math.random() * range.length)];
@@ -44,6 +34,7 @@ function getRandomNote(clef) {
   return { key: note, pitch };
 }
 
+// Component to display the note on the staff
 function Score({ noteKey, clef }) {
   const containerRef = useRef(null);
 
@@ -78,6 +69,7 @@ function Score({ noteKey, clef }) {
   return <div ref={containerRef} />;
 }
 
+// Main App Component
 function App() {
   const [clef, setClef] = useState("treble");
   const [noteObj, setNoteObj] = useState(getRandomNote("treble"));
@@ -133,7 +125,11 @@ function App() {
 
   return (
     <div style={{ textAlign: "center", fontFamily: "Arial", padding: "2rem", position: "relative" }}>
-      <h1>🎵 Sight Reading Practice</h1>
+      <h1>🎵 Music Note Read</h1>
+
+      <div style={{ marginBottom: "1rem" }}>
+        <img src={logo} alt="Music Note Read Logo" width="150" />
+      </div>
 
       <div style={{ marginBottom: "1rem" }}>
         <label>Select clef: </label>
